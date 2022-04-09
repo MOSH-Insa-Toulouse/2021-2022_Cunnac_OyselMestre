@@ -2,7 +2,7 @@
 
 MOSH INSA Toulouse: readme 2 qualité
 
-# Contexte et objectifs du projet
+# 1. Contexte et objectifs du projet
 
 - Réaliser une jauge de contrainte low-tech de graphite ( *insérer le lien du papier* )
 - Concevoir un shield Arduino contenant l'amplificateur du capteur et les composants électroniques annexes (émetteur/récepteur Bluetooth, encodeur rotatif et écran OLED)
@@ -10,15 +10,15 @@ MOSH INSA Toulouse: readme 2 qualité
 - Évaluer le capteur sur un banc de test pour rédiger une datasheet
 - Comparer la technologie mise en oeuvre avec autres types de jauges de contrainte (**on n'y est pas du tout pour le moment mais tout va bien se passer**)
 
-# 1. Capteur de contrainte
+# 2. Capteur de contrainte
 
 > Description de la technologie utilisée
 
-  ## 1.1 Circuit amplificateur
+  ## 2.1 Circuit amplificateur
   > Bonjour je suis le circuit amplificateur au LTC1050
-  ## 1.2 Shield Arduino et autres composants
+  ## 2.2 Shield Arduino et autres composants
   > Parce qu'on aime la créativité au gp, notre capteur dispose d'un émetteur BT et est fourni avec un afficheur OLED muni d'un encodeur rotatoire. Ça c'est du capteur
-# 2. Application mobile
+# 3. Application mobile
   > Une application mobile codée sous Android Studio (***Kotlin***) reçoit les informations du capteur par communication BT et permet d'exporter les données par SMS. C'est le futur de l'instrumentation.
-# 3. Banc de test, datasheet et discussions
+# 4. Banc de test, datasheet et discussions
   > On ne sera pas très bavard
