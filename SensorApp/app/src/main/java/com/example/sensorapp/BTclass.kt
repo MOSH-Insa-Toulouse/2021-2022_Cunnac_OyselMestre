@@ -44,9 +44,6 @@ class Bluetooth(context: Context?, handler: Handler?){
     val STATE_CONNECTING = 2 // now initiating an outgoing connection
     val STATE_CONNECTED = 3 // now connected to a remote device
 
-
-    private var mAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
-
     @Synchronized
     private fun setState(state: Int): Int{
         if (D) Log.d(TAG, "setState() $mState -> $state")
@@ -88,22 +85,6 @@ class Bluetooth(context: Context?, handler: Handler?){
         Log.i(TAG, "----END FUNCTION CONNECT:----")
         return mState
     }
-
-    fun cancel_connect(device: BluetoothDevice?){
-        Log.i(TAG, "----FUNCTION CANCEL CONNECT:----")
-        Log.i(TAG, "Current State: $mState")
-        if (D) Log.d(TAG, "Terminate connection to: $device")
-
-        // Cancel the current connection
-        if (getState() == STATE_NONE) {
-            Log.i(TAG, "Closing the socket")
-            mConnectThread?.cancel()
-            Log.i(TAG, "Socket closed")
-            mState = STATE_NONE
-            Log.i(TAG, "State Set: $mState")
-        }
-    }
-
 
     fun connected(socket: BluetoothSocket?, device: BluetoothDevice?, socketType: String?){
         Log.i(TAG, "----FUNCTION CONNECTED:----")

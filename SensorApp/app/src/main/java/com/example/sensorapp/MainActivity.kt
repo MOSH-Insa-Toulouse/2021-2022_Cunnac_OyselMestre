@@ -40,9 +40,6 @@ val MESSAGE_TOAST = 5
 val MESSAGE_LOSTCO = 667
 val MESSAGE_FAILEDCO = 668
 
-val TOAST_START_TIME_REPORT = 669
-val TOAST_END_TIME_REPORT = 670
-
 var inc = 0
 val lineChart = AnyChart.line()
 var data_array = arrayListOf<String>()
@@ -157,8 +154,6 @@ class MainActivity : AppCompatActivity() {
 
     fun toastoshow(int: Int){
         when (int) {
-            TOAST_START_TIME_REPORT -> Toast.makeText(this, "Receiving time report", Toast.LENGTH_SHORT).show()
-            TOAST_END_TIME_REPORT -> Toast.makeText(this, "Time report received", Toast.LENGTH_SHORT).show()
             MESSAGE_LOSTCO -> Toast.makeText(this, "Distant device disconnected", Toast.LENGTH_SHORT).show()
             MESSAGE_FAILEDCO -> Toast.makeText(this, "Unable to connect to device", Toast.LENGTH_SHORT).show()
         }
