@@ -17,8 +17,8 @@ MOSH INSA Toulouse: readme 2 qualité
   ## 2.1. Circuit amplificateur
   > Bonjour je suis le circuit amplificateur au LTC1050
   ## 2.2. Shield Arduino et autres composants
-  > Parce qu'on aime la créativité au gp, notre capteur dispose d'un émetteur BT et est fourni avec un afficheur OLED muni d'un encodeur rotatoire. Ça c'est du capteur
+  > Parce qu'on aime la créativité au gp, notre capteur dispose d'un émetteur BT et est fourni avec un afficheur OLED muni d'un encodeur rotatoire. Ça c'est du capteur !
 # 3. Application mobile
-  > Une application mobile codée sous Android Studio (***Kotlin***) reçoit les informations du capteur par communication BT et permet d'exporter les données par SMS. C'est le futur de l'instrumentation.
+  > Une application mobile codée sous Android Studio (***Kotlin***) reçoit les informations du capteur par communication BT et permet d'exporter les données par SMS. Ça c'est le futur de l'instrumentation.
 # 4. Banc de test, datasheet et discussions
   > On ne sera pas très bavards ici
