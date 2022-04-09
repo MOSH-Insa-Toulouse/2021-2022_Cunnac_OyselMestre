@@ -83,6 +83,7 @@ class MainActivity : AppCompatActivity() {
         val btButton = findViewById<Button>(R.id.btButton)
         val displayButton = findViewById<Button>(R.id.display_button)
         val exportButton = findViewById<Button>(R.id.savedataButton)
+        val helpButton = findViewById<Button>(R.id.tuto_button)
 
         val lineChartView = findViewById<AnyChartView>(R.id.line_chart)
 
@@ -115,6 +116,9 @@ class MainActivity : AppCompatActivity() {
         }
         exportButton.setOnClickListener{
             data_send()
+        }
+        helpButton.setOnClickListener{
+            HelpPopup(this).show()
         }
     }
 
