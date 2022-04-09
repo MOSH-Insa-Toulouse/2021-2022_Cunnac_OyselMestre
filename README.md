@@ -21,4 +21,4 @@ MOSH INSA Toulouse: readme 2 qualité
 # 3. Application mobile
   > Une application mobile codée sous Android Studio (***Kotlin***) reçoit les informations du capteur par communication BT et permet d'exporter les données par SMS. C'est le futur de l'instrumentation.
 # 4. Banc de test, datasheet et discussions
-  > On ne sera pas très bavard
+  > On ne sera pas très bavards ici
