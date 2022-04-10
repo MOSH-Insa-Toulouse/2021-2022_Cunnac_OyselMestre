@@ -29,7 +29,7 @@ MOSH INSA Toulouse: readme 2 qualité
  >   - un autre filtre RC couplé à l'AOP permet de filtrer la composante du bruit à 50 Hz provenant du réseau électrique
  >   - à la sortie de l'amplificateur, un autre filtre RC permet de traiter les bruits issus du traitement du signal
 
-![Figure 1: Circuit amplificateur transimpédence](analog_circuit.JPG)
+![Figure 1: Circuit amplificateur transimpédence](analog_circuit.JPG "Circuit amplificateur transimpédence")
 
  
   ## 2.2. Shield Arduino et autres composants
