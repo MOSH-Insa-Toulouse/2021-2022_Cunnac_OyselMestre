@@ -4,7 +4,7 @@ MOSH INSA Toulouse: readme 2 qualité
 
 # 1. Contexte et objectifs du projet
 
-- Réaliser une jauge de contrainte low-tech de graphite ( *insérer le lien du papier* )
+- Réaliser une jauge de contrainte low-tech à base de graphite [Pencil Drawn Strain Gauges and Chemiresistors on Paper](https://www.researchgate.net/publication/259846610_Pencil_Drawn_Strain_Gauges_and_Chemiresistors_on_Paper)
 - Concevoir un shield Arduino contenant l'amplificateur du capteur et les composants électroniques annexes (émetteur/récepteur Bluetooth, encodeur rotatif et écran OLED)
 - Réaliser une application mobile connectée à l'émetteur Bluetooth du capteur sous Android Studio
 - Évaluer le capteur sur un banc de test pour rédiger une datasheet
@@ -12,7 +12,8 @@ MOSH INSA Toulouse: readme 2 qualité
 
 # 2. Capteur de contrainte
 
-> Description de la technologie utilisée
+> Notre capteur de contrainte utilise une jauge en papier munie d'un circuit résistif en graphite. L'intérêt de l'utilisation d'une telle jauge vient de sa facilité de
+> mise en oeuvre. La jauge est directement tracé au crayon à papier et les matériaux nécessaires (papier et crayon) sont aisément procurables à moindre coût. 
 
   ## 2.1. Circuit amplificateur
   > Bonjour je suis le circuit amplificateur au LTC1050
