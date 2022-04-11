@@ -28,6 +28,7 @@ MOSH INSA Toulouse: readme 2 qualité
  >   - à l'entrée, un filtre passe-bas (R1C1) permet d'éliminer les nuisances RF provenant des dispositifs environnants (type émetteur bluetooth)
  >   - un autre filtre (R3C4) couplé à l'AOP permet de filtrer la composante du bruit à 50 Hz provenant du réseau électrique
  >   - à la sortie de l'amplificateur, un dernier filtre (R5C2) permet de traiter les bruits issus du traitement du signal
+
  >   La capacité C3 sert à filtrer les irrégularités de la tension d'alimentation de l'amplificateur. La résistance R2 sert à calibrer l'amplificateur sur le domaine de tension souhaité. Lors de la phase de prototypage, un potentiomètre digital était utilisé pour trouver la valeur de résistance souhaitée. Enfin, la résistance R4 protège l'AOP contre les décharges électrostatiques et constitue un filtre RC avec la capacité C1 pour les bruits en tension.
 
 ![Figure 1: Circuit amplificateur transimpédance](analog_circuit.JPG "Circuit amplificateur transimpédance")
