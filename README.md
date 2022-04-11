@@ -35,9 +35,18 @@ MOSH INSA Toulouse: readme 2 qualité
 
 **Figure 1: Circuit amplificateur transimpédance**
  
-> Pour vérifier le fonctionnement du circuit sur LTSpice, nous simulons la déformation de la jauge par un pulse de tension en entrée (Figure 2). Cela engendre une variation du signal en courant fourni à l'amplificateur. 
+> Pour vérifier le fonctionnement du circuit sur LTSpice, nous simulons la déformation de la jauge par un pulse de tension en entrée (Figure 2). Cela engendre une variation du signal en courant fourni à l'amplificateur. Pour cette simulation, nous avons considéré une jauge d'une conductance de 10 nS, ce qui correspond à l'ordre de grandeur de notre jauge résistive de graphite:
 
+![Figure 2: Circuit amplificateur transimpédance pour simulation](analog_circuit_simulation.JPG "Circuit amplificateur transimpédance")
 
+**Figure 2: Simulation du fonctionnement du circuit amplificateur. Un pulse de tension permet de modéliser la déformation de la jauge et la variation du signal en courant.**
+ 
+
+![Figure 3: Resultats de la simulation](simulation_Iin_Vout.JPG)
+
+**Figure 3: Résultats de la simulation. En vert, le signal en courant fourni par la jauge et en bleu la tension de sortie de l'AOP.**
+
+> Pour des courants d'entrée de l'ordre de la dizaine de nA nous obtenons en simulation une tension de sortie de l'ordre de la centaine de mV, ce qui est compris dans l'intervalle de tension pris en compte par l'ADC (de 0 à 1.1 V). De plus, pour la valeur de conductance choisie, la simulation montre que le signal fourni en sortie de l'AOP sans déformation du capteur est d'environ 500 mV. Cette valeur est très proche du centre de l'intervalle de tension de l'ADC, ce qui est optimal pour mesurer des variations positives et négatives de résistance.
 
   ## 2.2. Shield Arduino et autres composants
   > Parce qu'on aime la créativité au gp, notre capteur dispose d'un émetteur BT et est fourni avec un afficheur OLED muni d'un encodeur rotatoire. Ça c'est du capteur !
