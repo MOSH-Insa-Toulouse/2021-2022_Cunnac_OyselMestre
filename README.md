@@ -20,8 +20,20 @@ MOSH INSA Toulouse: readme 2 qualité
   > Bonjour je suis le circuit amplificateur au LTC1050
  
  > Le courant issu de la jauge de contrainte est de l'ordre de la centaine de nA. Le circuit amplificateur du capteur doit donc être en mesure d'extraire l'information de ce signal de très faible intensité.
- > Dans ce projet, nous avons décidé d'utiliser un montage transimpédence constitué d'un amplificateur opérationnel (AOP) pour traiter le signal de courant et fournir un signal en tension suffisant au convertisseur analogique-numérique (ADC) d'une carte Arduino UNO.
- >   Notre jauge de contrainte est composée d'une seule résistance en série (et non d'un pont de référence de type Wheatstone). De ce fait, notre signal est sensible aux dérives en tension de l'amplificateur. Notre AOP doit donc avoir un offset de tension très faible de manière à ce qu'il ne puisse fausser le signal fourni à l'ADC. Pour cela, la tension de dérive de l'AOP doit être inférieur à la plus petite variation de tension mesurable par l'ADC de l'Arduino UNO. Cette dernière utilise le convertisseur analogique-numérique 10-bit de l'[ATmega328p](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf). La sensibilité de cet ADC est d'environ 1.07 mV, ce qui constitue la limite maximale de l'offset de notre AOP. Ainsi, pour notre montage, nous utilisons le [LCT1050](https://www.analog.com/media/en/technical-documentation/data-sheets/1050fb.pdf) présentant un offset de 5µv, bien inférieur à la limite calculée précédemment. À titre de comparaison, le LM747 présente un offset compris entre 1 et 5 mV, ce qui n'est pas acceptable pour notre application.
+ > Dans ce projet, nous avons décidé d'utiliser un montage transimpédance constitué d'un amplificateur opérationnel (AOP) pour traiter le signal de courant et fournir un signal en tension suffisant au convertisseur analogique-numérique (ADC) d'une carte Arduino UNO.
+ 
+ >   Notre jauge de contrainte est composée d'une seule résistance en série (et non d'un pont de référence de type Wheatstone). De ce fait, notre signal est sensible aux dérives en tension de l'amplificateur. Notre AOP doit donc avoir un offset de tension très faible de manière à ce qu'il ne puisse fausser le signal fourni à l'ADC. Pour cela, la tension de dérive de l'AOP doit être inférieur à la plus petite variation de tension mesurable par l'ADC de l'Arduino UNO. Cette dernière utilise le convertisseur analogique-numérique 10-bit de l'[ATmega328p](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf). La sensibilité de cet ADC est d'environ 1.07 mV, ce qui constitue la limite maximale de l'offset de notre AOP. Ainsi, pour notre montage, nous utilisons le [LTC1050](https://www.analog.com/media/en/technical-documentation/data-sheets/1050fb.pdf) présentant un offset de 5µv, bien inférieur à la limite calculée précédemment. À titre de comparaison, le LM747 présente un offset compris entre 1 et 5 mV, ce qui n'est pas acceptable pour notre application. 
+ 
+ >   À partir de cet AOP, nous élaborons l'architecture du circuit amplificateur. Ce dernier dispose de trois étages de filtrage:
+ >   - à l'entrée, un filtre passe-bas (R1C1) permet d'éliminer les nuisances RF provenant des dispositifs environnants (type émetteur bluetooth)
+ >   - un autre filtre (R3C4) couplé à l'AOP permet de filtrer la composante du bruit à 50 Hz provenant du réseau électrique
+ >   - à la sortie de l'amplificateur, un dernier filtre (R5C2) permet de traiter les bruits issus du traitement du signal
+
+ >   La capacité C3 sert à filtrer les irrégularités de la tension d'alimentation de l'amplificateur. La résistance R2 sert à calibrer l'amplificateur sur le domaine de tension souhaité. Lors de la phase de prototypage, un potentiomètre digital était utilisé pour trouver la valeur de résistance souhaitée. Enfin, la résistance R4 protège l'AOP contre les décharges électrostatiques et constitue un filtre RC avec la capacité C1 pour les bruits en tension.
+
+![Figure 1: Circuit amplificateur transimpédance](analog_circuit.JPG "Circuit amplificateur transimpédance")
+
+**Figure 1: Circuit amplificateur transimpédance**
  
   ## 2.2. Shield Arduino et autres composants
   > Parce qu'on aime la créativité au gp, notre capteur dispose d'un émetteur BT et est fourni avec un afficheur OLED muni d'un encodeur rotatoire. Ça c'est du capteur !
