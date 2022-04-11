@@ -29,12 +29,16 @@ MOSH INSA Toulouse: readme 2 qualité
  >   - un autre filtre (R3C4) couplé à l'AOP permet de filtrer la composante du bruit à 50 Hz provenant du réseau électrique
  >   - à la sortie de l'amplificateur, un dernier filtre (R5C2) permet de traiter les bruits issus du traitement du signal
 
- >   La capacité C3 sert à filtrer les irrégularités de la tension d'alimentation de l'amplificateur. La résistance R2 sert à calibrer l'amplificateur sur le domaine de tension souhaité. Lors de la phase de prototypage, un potentiomètre digital était utilisé pour trouver la valeur de résistance souhaitée. Enfin, la résistance R4 protège l'AOP contre les décharges électrostatiques et constitue un filtre RC avec la capacité C1 pour les bruits en tension.
+ >   La capacité C3 sert à filtrer les irrégularités de la tension d'alimentation de l'amplificateur. La résistance R2 sert à calibrer l'amplificateur sur le domaine de tension souhaité, qui est celui de l'ADC du micro-contrôleur. Lors de la phase de prototypage du circuit, nous avons utilisé un potentiomètre digital à la place de cette résistance pour trouver sa valeur. Enfin, la résistance R4 protège l'AOP contre les décharges électrostatiques et constitue un filtre RC avec la capacité C1 pour les bruits en tension.
 
 ![Figure 1: Circuit amplificateur transimpédance](analog_circuit.JPG "Circuit amplificateur transimpédance")
 
 **Figure 1: Circuit amplificateur transimpédance**
  
+> Pour vérifier le fonctionnement du circuit sur LTSpice, nous simulons la déformation de la jauge par un pulse de tension en entrée (Figure 2). Cela engendre une variation du signal en courant fourni à l'amplificateur. 
+
+
+
   ## 2.2. Shield Arduino et autres composants
   > Parce qu'on aime la créativité au gp, notre capteur dispose d'un émetteur BT et est fourni avec un afficheur OLED muni d'un encodeur rotatoire. Ça c'est du capteur !
 # 3. Application mobile
