@@ -52,10 +52,17 @@ MOSH INSA Toulouse: readme 2 qualité
   > - un module de communication Bluetooth HC-05 qui permet d'envoyer les données du capteur à un smartphone doté de l'application liée au capteur
   > - un écran OLED I2C couplé à un encodeur rotatoire KY-040 qui sert d'interface utilisateur et permet de sélectionner le mode de fonctionnement du capteur (affichage de la valeur de résistance et/ou envoi des données bluetooth)
 
-![Figure 4](pcb_screenshot.JPG)
-**Figure 4: Design du PCB. **
+![Figure 4](pcb_shield_images/pcb_screenshot.JPG)
+
+**Figure 4: Design du PCB. Notez que la masse reliée à l'OLED et à l'encodeur est connectée à la masse de l'Arduino par un mince canal passant derrière les broches (tout en bas du PCB). Il aurait été préférable d'avoir une meilleure connexion entre les différentes zones de masse du circuit imprimé.**
 
   > Un défaut de fabrication du PCB a court-circuité la broche numérique 5 Arduino normalement non-connectée à la masse. Pour remédier à ce problème, nous avons dû gratter le PCB au scalpel pour déconnecter cette broche. Cependant, lors de cette opération, nous avons créé une piscine de masse, c'est-à-dire qu'une partie du PCB normalement reliée à la masse est devenue flottante. La piscine de masse en question alimentait l'écran OLED et l'encodeur, ce qui les rendait inutilisables. Pour rectifier cette erreur, nous avons relié cette piscine à la masse du circuit par un fil.
+
+  > Une fois le perçage, les soudures et les rectificatifs du PCB faits, nous obtenons un shield Arduino opérationnel.
+
+![Figure 5](pcb_shield_images/photo_shield.jpg)
+
+**Figure 5: Shield opérationnel alimenté par une carte Arduino UNO. L'écran OLED affiche le menu déroulant navigable à l'aide de l'encodeur rotatoire.**
 
 # 3. Application mobile
   > Dans le cadre de ce projet, nous avons programmé l'application mobile connectée au module Bluetooth du capteur sur Android Studio. L'application mobile est constituée d'une seule activité (Figure 4), sur laquelle il est possible d'acquérir les données du capteur en temps réel et de les tracer sur un graphe dynamique. Une fois les données acquises, il est aussi possible de les exporter sous forme de texte par SMS ou Email.Pour l'affichage des données sur un graphique, nous avons utilisé les bibliothèques en libre accès de la compagnie [AnyChart](https://www.anychart.com/).
@@ -64,7 +71,7 @@ MOSH INSA Toulouse: readme 2 qualité
 
 **Figure XX: Page d'accueil de l'application mobile. Le tracé représenté sur cette image n'est pas issu des données de notre capteur.**
 
- > Concernant la connection bluetooth, l'application ne permet pas de choisir à quel module se connecter. En réalité, l'application est liée à un module bluetooth en particulier et lui seul pourra se connecter au smartphone pour la transmission de données. Il faut bien entendu en amont appareiller le dispositif avant de pouvoir se connecter via l'application mobile. 
+ > Pour la connection Bluetooth, le smartphone doit être appareillé au module du capteur avant de pouvoir se connecter via l'application mobile. L'application ne permet pas de choisir à quel module se connecter. En réalité, l'application est liée à un module bluetooth en particulier (celui fourni avec le capteur) et lui seul pourra être connecté au smartphone pour la transmission de données. Une piste d'amélioration consiste à afficher la liste des dispositifs appareillés pour se connecter au module souhaité. Nous n'avons cependant pas pu implémenter cette fonctionnalité par manque de temps.
 
 # 4. Banc de test, datasheet et discussions
   > On ne sera pas très bavards ici
