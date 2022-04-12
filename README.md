@@ -17,12 +17,11 @@ MOSH INSA Toulouse: readme 2 qualité
 > Dans son principe, une jauge de contrainte est un circuit résistif dont la résistance varie avec sa déformation. En mesurant les variations de résistance de la jauge, il est possible de déduire la contrainte et la déformation appliquées. Dans ce projet, notre jauge de contrainte est alimentée par une tension régulée de 5V d'une carte Arduino UNO. La mesure du courant circulant dans la jauge constitue le signal du capteur, qui doit être amplifié et filtré.
 
   ## 2.1. Circuit amplificateur
-  > Bonjour je suis le circuit amplificateur au LTC1050
  
  > Le courant issu de la jauge de contrainte est de l'ordre de la centaine de nA. Le circuit amplificateur du capteur doit donc être en mesure d'extraire l'information de ce signal de très faible intensité.
  > Dans ce projet, nous avons décidé d'utiliser un montage transimpédance constitué d'un amplificateur opérationnel (AOP) pour traiter le signal de courant et fournir un signal en tension suffisant au convertisseur analogique-numérique (ADC) d'une carte Arduino UNO.
  
- >   Notre jauge de contrainte est composée d'une seule résistance en série (et non d'un pont de référence de type Wheatstone). De ce fait, notre signal est sensible aux dérives en tension de l'amplificateur. Notre AOP doit donc avoir un offset de tension très faible de manière à ce qu'il ne puisse fausser le signal fourni à l'ADC. Pour cela, la tension de dérive de l'AOP doit être inférieur à la plus petite variation de tension mesurable par l'ADC de l'Arduino UNO. Cette dernière utilise le convertisseur analogique-numérique 10-bit de l'[ATmega328p](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf). La sensibilité de cet ADC est d'environ 1.07 mV, ce qui constitue la limite maximale de l'offset de notre AOP. Ainsi, pour notre montage, nous utilisons le [LTC1050](https://www.analog.com/media/en/technical-documentation/data-sheets/1050fb.pdf) présentant un offset de 5µv, bien inférieur à la limite calculée précédemment. À titre de comparaison, le LM747 présente un offset compris entre 1 et 5 mV, ce qui n'est pas acceptable pour notre application. 
+ >   Notre jauge de contrainte est composée d'une seule résistance en série (et non d'un pont de référence de type Wheatstone). De ce fait, notre signal est sensible aux dérives en tension de l'amplificateur. Notre AOP doit donc avoir un offset de tension très faible de manière à ce qu'il ne puisse fausser le signal fourni à l'ADC. Pour cela, la tension de dérive de l'AOP doit être inférieur à la plus petite variation de tension mesurable par l'ADC de l'Arduino UNO. Cette dernière utilise le convertisseur analogique-numérique 10-bit de l'[ATmega328p](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf). La sensibilité de cet ADC est d'environ 1.07 mV, ce qui constitue la limite maximale de l'offset de notre AOP. Ainsi, pour notre montage, nous utilisons le [LTC1050](https://www.analog.com/media/en/technical-documentation/data-sheets/1050fb.pdf) présentant un offset de 5µV, bien inférieur à la limite calculée précédemment. À titre de comparaison, le LM741 présente un offset compris entre 1 et 5 mV, ce qui n'est pas acceptable pour notre application. 
  
  >   À partir de cet AOP, nous élaborons l'architecture du circuit amplificateur. Ce dernier dispose de trois étages de filtrage:
  >   - à l'entrée, un filtre passe-bas (R1C1) permet d'éliminer les nuisances RF provenant des dispositifs environnants (type émetteur bluetooth)
@@ -48,9 +47,17 @@ MOSH INSA Toulouse: readme 2 qualité
 
 > Pour des courants d'entrée de l'ordre de la dizaine de nA nous obtenons en simulation une tension de sortie de l'ordre de la centaine de mV, ce qui est compris dans l'intervalle de tension pris en compte par l'ADC (de 0 à 1.1 V). De plus, pour la valeur de conductance choisie, la simulation montre que le signal fourni en sortie de l'AOP sans déformation du capteur est d'environ 500 mV. Cette valeur est très proche du centre de l'intervalle de tension de l'ADC, ce qui est optimal pour mesurer des variations positives et négatives de résistance.
 
-  ## 2.2. Shield Arduino et autres composants
-  > Parce qu'on aime la créativité au gp, notre capteur dispose d'un émetteur BT et est fourni avec un afficheur OLED muni d'un encodeur rotatoire. Ça c'est du capteur !
+  ## 2.2. Intégration Arduino
+  > Notre capteur de contrainte est intégré avec son circuit amplificateur sur un circuit imprimé (PCB) que nous avons conçu sur le logiciel KiCad. Ce PCB est un shield pour la carte Arduino UNO qui pilote le capteur et qui intègre plusieurs composants annexes:
+  > - un module de communication Bluetooth HC-05 qui permet d'envoyer les données du capteur à un smartphone doté de l'application liée au capteur
+  > - un écran OLED I2C couplé à un encodeur rotatoire KY-040 qui sert d'interface utilisateur et permet de sélectionner le mode de fonctionnement du capteur (affichage de la valeur de résistance et/ou envoi des données bluetooth)  
 # 3. Application mobile
-  > Une application mobile codée sous Android Studio (***Kotlin***) reçoit les informations du capteur par communication BT et permet d'exporter les données par SMS. Ça c'est le futur de l'instrumentation.
+  > Dans le cadre de ce projet, nous avons programmé l'application mobile connectée au module Bluetooth du capteur sur Android Studio. L'application mobile est constituée d'une seule activité (Figure 4), sur laquelle il est possible d'acquérir les données du capteur en temps réel et de les tracer sur un graphe dynamique. Une fois les données acquises, il est aussi possible de les exporter sous forme de texte par SMS ou Email.Pour l'affichage des données sur un graphique, nous avons utilisé les bibliothèques en libre accès de la compagnie [AnyChart](https://www.anychart.com/).
+
+![Figure 4: Main Activity](SensorApp_screenshot.JPG)
+
+**Figure 4: Page d'accueil de l'application mobile. Le tracé représenté sur cette image n'est pas issu des données de notre capteur.**
+
+
 # 4. Banc de test, datasheet et discussions
   > On ne sera pas très bavards ici
