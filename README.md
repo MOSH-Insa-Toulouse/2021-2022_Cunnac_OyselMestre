@@ -30,18 +30,18 @@ MOSH INSA Toulouse: readme 2 qualité
 
  >   La capacité C3 sert à filtrer les irrégularités de la tension d'alimentation de l'amplificateur. La résistance R2 sert à calibrer l'amplificateur sur le domaine de tension souhaité, qui est celui de l'ADC du micro-contrôleur. Lors de la phase de prototypage du circuit, nous avons utilisé un potentiomètre digital à la place de cette résistance pour trouver sa valeur. Enfin, la résistance R4 protège l'AOP contre les décharges électrostatiques et constitue un filtre RC avec la capacité C1 pour les bruits en tension.
 
-![Figure 1: Circuit amplificateur transimpédance](analog_circuit.JPG "Circuit amplificateur transimpédance")
+![Figure 1: Circuit amplificateur transimpédance](analog_circuit_images/analog_circuit.JPG "Circuit amplificateur transimpédance")
 
 **Figure 1: Circuit amplificateur transimpédance**
  
 > Pour vérifier le fonctionnement du circuit sur LTSpice, nous simulons la déformation de la jauge par un pulse de tension en entrée (Figure 2). Cela engendre une variation du signal en courant fourni à l'amplificateur. Pour cette simulation, nous avons considéré une jauge d'une conductance de 10 nS, ce qui correspond à l'ordre de grandeur de notre jauge résistive de graphite:
 
-![Figure 2: Circuit amplificateur transimpédance pour simulation](analog_circuit_simulation.JPG "Circuit amplificateur transimpédance")
+![Figure 2: Circuit amplificateur transimpédance pour simulation](analog_circuit_images/analog_circuit_simulation.JPG "Circuit amplificateur transimpédance")
 
 **Figure 2: Simulation du fonctionnement du circuit amplificateur. Un pulse de tension permet de modéliser la déformation de la jauge et la variation du signal en courant.**
  
 
-![Figure 3: Resultats de la simulation](simulation_Iin_Vout.JPG)
+![Figure 3: Resultats de la simulation](analog_circuit_images/simulation_Iin_Vout.JPG)
 
 **Figure 3: Résultats de la simulation. En vert, le signal en courant fourni par la jauge et en bleu la tension de sortie de l'AOP.**
 
