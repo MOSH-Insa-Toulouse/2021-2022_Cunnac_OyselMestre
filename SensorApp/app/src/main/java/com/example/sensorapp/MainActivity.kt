@@ -29,6 +29,7 @@ import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.chart.common.dataentry.DataEntry
 
 import com.anychart.AnyChart
+import kotlin.random.Random
 
 val TAG = "Main"
 
@@ -88,11 +89,12 @@ class MainActivity : AppCompatActivity() {
         lineChart.title("Sensor Resistance (Ohms)")
         lineChartView.setChart(lineChart) //set pie on view
 
+
         btStatus(Bluetooth(this, handler).getState().toString())
 
 
         btButton.setOnClickListener{
-            if ( Bluetooth(this, handler).getState()  == 0 ) connectService("HC-05")
+            if ( Bluetooth(this, handler).getState()  == 0 ) connectService("HC-05") //connectService("MOODOOW2")
             else Bluetooth(this, handler).stop()
         }
 

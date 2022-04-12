@@ -50,14 +50,21 @@ MOSH INSA Toulouse: readme 2 qualité
   ## 2.2. Intégration Arduino
   > Notre capteur de contrainte est intégré avec son circuit amplificateur sur un circuit imprimé (PCB) que nous avons conçu sur le logiciel KiCad. Ce PCB est un shield pour la carte Arduino UNO qui pilote le capteur et qui intègre plusieurs composants annexes:
   > - un module de communication Bluetooth HC-05 qui permet d'envoyer les données du capteur à un smartphone doté de l'application liée au capteur
-  > - un écran OLED I2C couplé à un encodeur rotatoire KY-040 qui sert d'interface utilisateur et permet de sélectionner le mode de fonctionnement du capteur (affichage de la valeur de résistance et/ou envoi des données bluetooth)  
+  > - un écran OLED I2C couplé à un encodeur rotatoire KY-040 qui sert d'interface utilisateur et permet de sélectionner le mode de fonctionnement du capteur (affichage de la valeur de résistance et/ou envoi des données bluetooth)
+
+![Figure 4](pcb_screenshot.JPG)
+**Figure 4: Design du PCB. **
+
+  > Un défaut de fabrication du PCB a court-circuité la broche numérique 5 Arduino normalement non-connectée à la masse. Pour remédier à ce problème, nous avons dû gratter le PCB au scalpel pour déconnecter cette broche. Cependant, lors de cette opération, nous avons créé une piscine de masse, c'est-à-dire qu'une partie du PCB normalement reliée à la masse est devenue flottante. La piscine de masse en question alimentait l'écran OLED et l'encodeur, ce qui les rendait inutilisables. Pour rectifier cette erreur, nous avons relié cette piscine à la masse du circuit par un fil.
+
 # 3. Application mobile
   > Dans le cadre de ce projet, nous avons programmé l'application mobile connectée au module Bluetooth du capteur sur Android Studio. L'application mobile est constituée d'une seule activité (Figure 4), sur laquelle il est possible d'acquérir les données du capteur en temps réel et de les tracer sur un graphe dynamique. Une fois les données acquises, il est aussi possible de les exporter sous forme de texte par SMS ou Email.Pour l'affichage des données sur un graphique, nous avons utilisé les bibliothèques en libre accès de la compagnie [AnyChart](https://www.anychart.com/).
 
-![Figure 4: Main Activity](SensorApp_screenshot.JPG)
+![Figure XX: Main Activity](SensorApp_screenshot.JPG)
 
-**Figure 4: Page d'accueil de l'application mobile. Le tracé représenté sur cette image n'est pas issu des données de notre capteur.**
+**Figure XX: Page d'accueil de l'application mobile. Le tracé représenté sur cette image n'est pas issu des données de notre capteur.**
 
+ > Concernant la connection bluetooth, l'application ne permet pas de choisir à quel module se connecter. En réalité, l'application est liée à un module bluetooth en particulier et lui seul pourra se connecter au smartphone pour la transmission de données. Il faut bien entendu en amont appareiller le dispositif avant de pouvoir se connecter via l'application mobile. 
 
 # 4. Banc de test, datasheet et discussions
   > On ne sera pas très bavards ici
