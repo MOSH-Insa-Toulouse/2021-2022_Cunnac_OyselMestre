@@ -29,6 +29,7 @@ import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.chart.common.dataentry.DataEntry
 
 import com.anychart.AnyChart
+import kotlin.math.pow
 import kotlin.random.Random
 
 val TAG = "Main"
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         val lineChartView = findViewById<AnyChartView>(R.id.line_chart)
 
         lineChart.xScale("continuous")
-        lineChart.title("Sensor Resistance (Ohms)")
+        lineChart.title("Sensor Resistance (MΩ)")
         lineChartView.setChart(lineChart) //set pie on view
 
 
@@ -164,11 +165,12 @@ class MainActivity : AppCompatActivity() {
     fun data_write(message: String, inc: Int){
         Log.d(TAG, "MESSAGE:$message, INC: $inc")
         Log.d(TAG, "MESSAGE LENGTH: ${message.length}")
-        if (message != null) {
-            val subseq = message.subSequence(0, message.length - 3).toString()
+
+        if (message.length > 3 ){ //message sufficiently long
+                val subseq = message.subSequence(0, message.length - 2).toString()
             if (subseq.isDigitsOnly()) {
                 Log.d(TAG, "APPEND DATA: $message")
-                data.add(ValueDataEntry(inc, subseq.toInt()))
+                data.add(ValueDataEntry( inc, subseq.toFloat()/10.0.pow(6) ))
                 data_array.add(subseq)
             }
         }

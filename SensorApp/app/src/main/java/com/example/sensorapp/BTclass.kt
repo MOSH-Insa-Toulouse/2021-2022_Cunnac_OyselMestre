@@ -191,7 +191,7 @@ class Bluetooth(context: Context?, handler: Handler?){
 
         override fun run() {
             Log.i(TAG, "BEGIN mConnectedThread")
-            val buffer = ByteArray(20)
+            val buffer = ByteArray(1000)
             var bytes: Int
 
             // Keep listening to the InputStream while connected
@@ -199,7 +199,9 @@ class Bluetooth(context: Context?, handler: Handler?){
                 try {
                     // Read from the InputStream
                     Log.i(TAG, "### Message received ###")
+                    Log.e(TAG, "### WARNING 1 ###")
                     bytes = mmInStream.read(buffer)
+                    Log.e(TAG, "### bytes = read(buffer) ###")
                     Log.d(TAG, "message bytes $bytes")
                     Log.d(TAG, "message buffer " + String(buffer))
 
