@@ -115,7 +115,9 @@ class MainActivity : AppCompatActivity() {
             } else Toast.makeText(this, "Sensor is not connected", Toast.LENGTH_SHORT).show()
         }
         exportButton.setOnClickListener{
-            data_send()
+            //data_send()
+            if (data_array.isEmpty()) Toast.makeText(this, "No data to export !", Toast.LENGTH_SHORT).show()
+            else ExportPopup(this, data).show()
         }
         helpButton.setOnClickListener{
             HelpPopup(this).show()
