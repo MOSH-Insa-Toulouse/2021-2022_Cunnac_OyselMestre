@@ -8,7 +8,7 @@ MOSH INSA Toulouse: readme 2 qualité
 - Concevoir un shield Arduino contenant l'amplificateur du capteur et les composants électroniques annexes (émetteur/récepteur Bluetooth, encodeur rotatif et écran OLED)
 - Réaliser une application mobile connectée à l'émetteur Bluetooth du capteur sous Android Studio
 - Évaluer le capteur sur un banc de test pour rédiger une datasheet
-- Comparer la technologie mise en oeuvre avec autres types de jauges de contrainte (**on n'y est pas du tout pour le moment mais tout va bien se passer**)
+- Comparer la technologie mise en oeuvre avec autres types de jauges de contrainte
 
 # 2. Capteur de contrainte
 
@@ -65,13 +65,13 @@ MOSH INSA Toulouse: readme 2 qualité
 **Figure 5: Shield opérationnel alimenté par une carte Arduino UNO. L'écran OLED affiche le menu déroulant navigable à l'aide de l'encodeur rotatoire.**
 
 # 3. Application mobile
-  > Dans le cadre de ce projet, nous avons programmé l'application mobile connectée au module Bluetooth du capteur sur Android Studio. L'application mobile est constituée d'une seule activité (Figure 4), sur laquelle il est possible d'acquérir les données du capteur en temps réel et de les tracer sur un graphe dynamique. Une fois les données acquises, il est aussi possible de les exporter sous forme de texte par SMS ou Email. Un bouton d'aide en bas de l'activité ouvre une fenêtre surgissante pour informer l'utilisateur du fonctionnement de l'application. Pour l'affichage des données sur le graphique, nous avons utilisé les bibliothèques en libre accès de la compagnie [AnyChart](https://www.anychart.com/).
+  > Dans le cadre de ce projet, nous avons programmé l'application mobile connectée au module Bluetooth du capteur sur Android Studio. L'application mobile est constituée d'une seule activité sur laquelle il est possible d'acquérir les données du capteur en temps réel et de les tracer sur un graphique dynamique. Une fois les données acquises, il est possible de les exporter sous forme de texte par email ou SMS. L'application propose également d'ouvrir toute une variété d'applications pour l'export des données (réseaux sociaux et autres). Un bouton d'aide en bas de l'activité ouvre une fenêtre surgissante pour informer l'utilisateur du fonctionnement de l'application. Pour l'affichage des données sur le graphique, nous avons utilisé les bibliothèques en libre accès de la compagnie [AnyChart](https://www.anychart.com/).
 
-![Figure XX: Main Activity](SensorApp_screenshot.JPG)
+ > [Figure 6](app_images/SensorApp_screenshot.JPG)
 
 **Figure XX: Page d'accueil de l'application mobile. Le tracé représenté sur cette image n'est pas issu des données de notre capteur.**
 
  > Pour la connection Bluetooth, le smartphone doit être appareillé au module du capteur avant de pouvoir se connecter via l'application mobile. L'application ne permet pas de choisir à quel module se connecter. En réalité, l'application est liée à un module bluetooth en particulier (celui fourni avec le capteur) et lui seul pourra être connecté au smartphone pour la transmission de données. Une piste d'amélioration consiste à afficher la liste des dispositifs appareillés pour se connecter au module souhaité. Nous n'avons cependant pas pu implémenter cette fonctionnalité par manque de temps.
 
 # 4. Banc de test, datasheet et discussions
-  > On ne sera pas très bavards ici
+  > 

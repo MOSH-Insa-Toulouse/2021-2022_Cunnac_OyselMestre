@@ -145,6 +145,7 @@ class Bluetooth(context: Context?, handler: Handler?){
                 try {
                     Log.i(TAG, "Closing the socket")
                     mmSocket!!.close()
+                    connectionFailed()
                 } catch (e2: IOException) {
                     Log.e(
                         TAG, "unable to close() " + mSocketType
