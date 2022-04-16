@@ -54,11 +54,16 @@ S
 
 ![Figure 4](pcb_shield_images/pcb_screenshot.JPG)
 
-**Figure 4: Design du PCB. Notez que la masse reliée à l'OLED et à l'encodeur est connectée à la masse de l'Arduino par un mince canal passant derrière les broches (tout en haut du PCB). Il aurait été préférable d'avoir une meilleure connexion entre les différentes zones de masse du circuit imprimé.**
+**Figure 4: Design du PCB. Notez que la masse reliée à l'OLED et à l'encodeur est connectée à la masse de l'Arduino par un mince canal passant derrière les broches digitales 0-7 (tout en haut du PCB). Il aurait été préférable d'avoir une meilleure connexion entre les différentes zones de masse du circuit imprimé.**
 
   > Un défaut de fabrication du PCB a court-circuité la broche numérique 5 Arduino normalement non-connectée à la masse. Pour remédier à ce problème, nous avons dû gratter le PCB au scalpel pour déconnecter cette broche. Cependant, lors de cette opération, nous avons créé une piscine de masse, c'est-à-dire qu'une partie du PCB normalement reliée à la masse est devenue flottante. La piscine de masse en question alimentait l'écran OLED et l'encodeur, ce qui les rendait inutilisables. Pour rectifier cette erreur, nous avons relié cette piscine à la masse du circuit par un fil.
 
-  > Une fois le perçage, les soudures et les rectificatifs du PCB faits, nous obtenons un shield Arduino opérationnel.
+  > Une fois le perçage, les soudures et les rectificatifs du PCB faits, nous obtenons un shield Arduino opérationnel. Nous avons également pu faire nos premières mesures avec ce dernier, couplé à l'application mobile:
+
+ > <div class="row" align="center">
+ > <img src="pcb_shield_images/photo_shield.jpg" alt="200" width="200"/>
+ > <img src="app_images/pcb_and_app_pic.jpg" alt="200" width="200"/>
+ > </div>
 
 ![Figure 5](pcb_shield_images/photo_shield.jpg)
 
@@ -66,8 +71,9 @@ S
 
 # 3. Application mobile
   > Dans le cadre de ce projet, nous avons programmé l'application mobile connectée au module Bluetooth du capteur sur Android Studio. L'application mobile est constituée d'une seule activité sur laquelle il est possible d'acquérir les données du capteur en temps réel et de les tracer sur un graphique dynamique. Une fois les données acquises, il est possible de les exporter sous forme de texte par email ou SMS. L'application propose également d'ouvrir toute une variété d'applications pour l'export des données (réseaux sociaux et autres). Un bouton d'aide en bas de l'activité ouvre une fenêtre surgissante pour informer l'utilisateur du fonctionnement de l'application. Pour l'affichage des données sur le graphique, nous avons utilisé les bibliothèques en libre accès de la compagnie [AnyChart](https://www.anychart.com/).
+
  > <p align="center">
- > <img src="app_images/SensorApp_screenshot.JPG" alt="500" width="500"/>
+ > <img src="app_images/SensorApp_screenshot.JPG" alt="300" width="300"/>
  > </p>
 
  **Figure 6: Page d'accueil de la dernière version de l'application mobile. Cette capture d'écran a été prise pendant le fonctionnement du capteur.**
