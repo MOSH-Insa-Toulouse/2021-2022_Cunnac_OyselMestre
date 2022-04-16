@@ -32,13 +32,13 @@ MOSH INSA Toulouse: readme 2 qualité
 
 ![Figure 1: Circuit amplificateur transimpédance](analog_circuit_images/analog_circuit.JPG "Circuit amplificateur transimpédance")
 
-**Figure 1: Circuit amplificateur transimpédance**
+**Figure 1 - Circuit amplificateur transimpédance**
  
 > Pour vérifier le fonctionnement du circuit sur LTSpice, nous simulons la déformation de la jauge par un pulse de tension en entrée (Figure 2). Ce pulse de tension génère une variation du courant en entrée de l'AOP. Virtuellement, cela représente la variation de conductance de la jauge due à sa déformation. Pour cette simulation, nous faisons varier la conductance de 5 nS à 20 nS, ce qui correspond à l'ordre de grandeur des jauges resistives utilisées. Ce faisant, nous balayons à peu près tout l'intervalle de signaux d'entrée possibles:
 S
 ![Figure 2: Circuit amplificateur transimpédance pour simulation](analog_circuit_images/analog_circuit_full_sim.JPG "Circuit amplificateur transimpédance")
 
-**Figure 2: Simulation du fonctionnement du circuit amplificateur. Un pulse de tension permet de modéliser la déformation de la jauge et la variation du signal en courant.**
+**Figure 2 - Simulation du fonctionnement du circuit amplificateur. Un pulse de tension permet de modéliser la déformation de la jauge et la variation du signal en courant.**
  
 
 ![Figure 3: Resultats de la simulation](analog_circuit_images/simulation_Vpulse.JPG)
@@ -56,7 +56,7 @@ S
 > <img src="pcb_shield_app_images/pcb_screenshot.JPG"/>
 > </p>
 
-**Figure 4: Design du PCB. Notez que la masse reliée à l'OLED et à l'encodeur est connectée à la masse de l'Arduino par un mince canal passant derrière les broches digitales 0-7 (tout en haut du PCB). Il aurait été préférable d'avoir une meilleure connexion entre les différentes zones de masse du circuit imprimé.**
+**Figure 4 - Design du PCB. Notez que la masse reliée à l'OLED et à l'encodeur est connectée à la masse de l'Arduino par un mince canal passant derrière les broches digitales 0-7 (tout en haut du PCB). Il aurait été préférable d'avoir une meilleure connexion entre les différentes zones de masse du circuit imprimé.**
 
   > Un défaut de fabrication du PCB a court-circuité la broche numérique 5 Arduino normalement non-connectée à la masse. Pour remédier à ce problème, nous avons dû gratter le PCB au scalpel pour déconnecter cette broche. Cependant, lors de cette opération, nous avons créé une piscine de masse, c'est-à-dire qu'une partie du PCB normalement reliée à la masse est devenue flottante. La piscine de masse en question alimentait l'écran OLED et l'encodeur, ce qui les rendait inutilisables. Pour rectifier cette erreur, nous avons relié cette piscine à la masse du circuit par un fil.
 
@@ -67,7 +67,7 @@ S
  > <img src="pcb_shield_app_images/pcb_and_app_pic.jpg"/>
  > </div>
 
-**Figure 5: En haut - Shield opérationnel alimenté par une carte Arduino UNO. L'écran OLED affiche le menu déroulant navigable à l'aide de l'encodeur rotatoire. En bas - Capteur en fonctionnement connecté à l'application mobile (première version).**
+**Figure 5 - En haut: shield opérationnel alimenté par une carte Arduino UNO. L'écran OLED affiche le menu déroulant navigable à l'aide de l'encodeur rotatoire. En bas: capteur en fonctionnement connecté à l'application mobile (première version).**
 
  > L'application mobile visible sur la figure ci-dessus constitue la deuxième partie de développement de notre projet, que nous abordons dans la partie suivante.
 
@@ -80,7 +80,7 @@ S
  > <img src="pcb_shield_app_images/SensorApp_export_data_screenshot.jpg" alt="300" width="300"/>
  > </div>
 
- **Figure 6: À gauche - Page d'accueil de la dernière version de l'application mobile. Cette capture d'écran a été prise pendant le fonctionnement du capteur. À droite - Fenêtre surgissante permettant l'export des données du capteur.**
+ **Figure 6 - À gauche: page d'accueil de la dernière version de l'application mobile. Cette capture d'écran a été prise pendant le fonctionnement du capteur. À droite: fenêtre surgissante permettant l'export des données du capteur.**
 
  > Pour la connection Bluetooth, le smartphone doit être appareillé au module du capteur avant de pouvoir se connecter via l'application mobile. L'application ne permet pas de choisir à quel module se connecter. En réalité, l'application est liée à un module bluetooth en particulier (celui fourni avec le capteur) et lui seul pourra être connecté au smartphone pour la transmission de données. Une piste d'amélioration consiste à afficher la liste des dispositifs appareillés pour se connecter au module souhaité. Nous n'avons cependant pas pu implémenter cette fonctionnalité par manque de temps.
 
