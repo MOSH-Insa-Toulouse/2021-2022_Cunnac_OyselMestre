@@ -75,7 +75,7 @@ S
 
  > <div class="column" align="center">
  > <img src="pcb_shield_app_images/SensorApp_screenshot.JPG" alt="300" width="300"/>
- > <img src="pcb_shield_app_images/SensorApp_export_data_screenshot.JPG" alt="300" width="300"/>
+ > <img src="pcb_shield_app_images/SensorApp_export_data_screenshot.jpg" alt="300" width="300"/>
  > </div>
 
  **Figure 6: Page d'accueil de la dernière version de l'application mobile. Cette capture d'écran a été prise pendant le fonctionnement du capteur.**
