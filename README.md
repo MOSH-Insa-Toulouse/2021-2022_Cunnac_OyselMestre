@@ -35,13 +35,13 @@ MOSH INSA Toulouse: readme 2 qualité
 **Figure 1: Circuit amplificateur transimpédance**
  
 > Pour vérifier le fonctionnement du circuit sur LTSpice, nous simulons la déformation de la jauge par un pulse de tension en entrée (Figure 2). Ce pulse de tension génère une variation du courant en entrée de l'AOP. Virtuellement, cela représente la variation de conductance de la jauge due à sa déformation. Pour cette simulation, nous faisons varier la conductance de 5 nS à 20 nS, ce qui correspond à l'ordre de grandeur des jauges resistives utilisées. Ce faisant, nous balayons à peu près tout l'intervalle de signaux d'entrée possibles:
-
+S
 ![Figure 2: Circuit amplificateur transimpédance pour simulation](analog_circuit_images/analog_circuit_full_sim.JPG "Circuit amplificateur transimpédance")
 
 **Figure 2: Simulation du fonctionnement du circuit amplificateur. Un pulse de tension permet de modéliser la déformation de la jauge et la variation du signal en courant.**
  
 
-![Figure 3: Resultats de la simulation](analog_circuit_images/simulation_Iin_Vout.JPG)
+![Figure 3: Resultats de la simulation](analog_circuit_images/simulation_Vpulse.JPG)
 
 **Figure 3: Résultats de la simulation. En vert, le signal en courant fourni par la jauge et en bleu la tension de sortie de l'AOP.**
 
@@ -67,7 +67,7 @@ MOSH INSA Toulouse: readme 2 qualité
 # 3. Application mobile
   > Dans le cadre de ce projet, nous avons programmé l'application mobile connectée au module Bluetooth du capteur sur Android Studio. L'application mobile est constituée d'une seule activité sur laquelle il est possible d'acquérir les données du capteur en temps réel et de les tracer sur un graphique dynamique. Une fois les données acquises, il est possible de les exporter sous forme de texte par email ou SMS. L'application propose également d'ouvrir toute une variété d'applications pour l'export des données (réseaux sociaux et autres). Un bouton d'aide en bas de l'activité ouvre une fenêtre surgissante pour informer l'utilisateur du fonctionnement de l'application. Pour l'affichage des données sur le graphique, nous avons utilisé les bibliothèques en libre accès de la compagnie [AnyChart](https://www.anychart.com/).
 
- > [Figure 6](app_images/SensorApp_screenshot.JPG)
+ > ![Figure 6](app_images/SensorApp_screenshot.JPG)
 
 **Figure XX: Page d'accueil de l'application mobile. Le tracé représenté sur cette image n'est pas issu des données de notre capteur.**
 
