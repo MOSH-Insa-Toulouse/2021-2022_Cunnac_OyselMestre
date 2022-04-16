@@ -65,7 +65,7 @@ S
  > <img src="pcb_shield_app_images/pcb_and_app_pic.jpg"/>
  > </div>
 
-**Figure 5: À gauche - Shield opérationnel alimenté par une carte Arduino UNO. L'écran OLED affiche le menu déroulant navigable à l'aide de l'encodeur rotatoire. À droite - Capteur en fonctionnement connecté à l'application mobile (première version).**
+**Figure 5: En haut - Shield opérationnel alimenté par une carte Arduino UNO. L'écran OLED affiche le menu déroulant navigable à l'aide de l'encodeur rotatoire. En bas - Capteur en fonctionnement connecté à l'application mobile (première version).**
 
  > L'application mobile visible sur la figure ci-dessus constitue la deuxième partie de développement de notre projet, que nous abordons dans la partie suivante.
 
@@ -73,10 +73,10 @@ S
 
   > Dans le cadre de ce projet, nous avons programmé sur Android Studio l'application mobile connectée au module Bluetooth du capteur. Cette dernière est constituée d'une seule activité sur laquelle il est possible d'acquérir les données du capteur en temps réel et de les tracer sur un graphique dynamique. Une fois les données acquises, il est possible de les exporter sous forme de texte par email ou SMS. L'application propose également d'ouvrir toute une variété d'applications pour l'export des données (réseaux sociaux et autres). Un bouton d'aide en bas de l'activité ouvre une fenêtre surgissante pour informer l'utilisateur du fonctionnement de l'application. Pour l'affichage des données sur le graphique, nous avons utilisé les bibliothèques en libre accès de la compagnie [AnyChart](https://www.anychart.com/).
 
- > <p class="row" align="center">
+ > <div class="column" align="center">
  > <img src="pcb_shield_app_images/SensorApp_screenshot.JPG" alt="300" width="300"/>
  > <img src="pcb_shield_app_images/SensorApp_export_data_screenshot.JPG" alt="300" width="300"/>
- > </p>
+ > </div>
 
  **Figure 6: Page d'accueil de la dernière version de l'application mobile. Cette capture d'écran a été prise pendant le fonctionnement du capteur.**
 
