@@ -52,7 +52,9 @@ S
   > - un module de communication Bluetooth HC-05 qui permet d'envoyer les données du capteur à un smartphone doté de l'application liée au capteur
   > - un écran OLED I2C couplé à un encodeur rotatoire KY-040 qui sert d'interface utilisateur et permet de sélectionner le mode de fonctionnement du capteur (affichage de la valeur de résistance et/ou envoi des données bluetooth)
 
-![Figure 4](pcb_shield_images/pcb_screenshot.JPG)
+> <p align="center">
+> <img src="pcb_shield_app_images/pcb_screenshot.JPG"/>
+> </p>
 
 **Figure 4: Design du PCB. Notez que la masse reliée à l'OLED et à l'encodeur est connectée à la masse de l'Arduino par un mince canal passant derrière les broches digitales 0-7 (tout en haut du PCB). Il aurait été préférable d'avoir une meilleure connexion entre les différentes zones de masse du circuit imprimé.**
 
@@ -78,7 +80,7 @@ S
  > <img src="pcb_shield_app_images/SensorApp_export_data_screenshot.jpg" alt="300" width="300"/>
  > </div>
 
- **Figure 6: Page d'accueil de la dernière version de l'application mobile. Cette capture d'écran a été prise pendant le fonctionnement du capteur.**
+ **Figure 6: À gauche - Page d'accueil de la dernière version de l'application mobile. Cette capture d'écran a été prise pendant le fonctionnement du capteur. À droite - Fenêtre surgissante permettant l'export des données du capteur.**
 
  > Pour la connection Bluetooth, le smartphone doit être appareillé au module du capteur avant de pouvoir se connecter via l'application mobile. L'application ne permet pas de choisir à quel module se connecter. En réalité, l'application est liée à un module bluetooth en particulier (celui fourni avec le capteur) et lui seul pourra être connecté au smartphone pour la transmission de données. Une piste d'amélioration consiste à afficher la liste des dispositifs appareillés pour se connecter au module souhaité. Nous n'avons cependant pas pu implémenter cette fonctionnalité par manque de temps.
 
