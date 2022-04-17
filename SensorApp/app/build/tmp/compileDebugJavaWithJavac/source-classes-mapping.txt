@@ -1,2 +1,0 @@
-com/example/sensorapp/BuildConfig.java
- com.example.sensorapp.BuildConfig
