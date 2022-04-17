@@ -1,14 +1,10 @@
- #include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 // ========= Initialisation Sensor ========= //
 
 const int sensorPin = 0; //initialisation du sensorPin sur A0
-int Voltage_ADC_map ;
-float Voltage_ADC ;
+int Voltage_ADC_map ; //variable contenant la tension brute mesurée par l'ADC
+float Voltage_ADC ; //variable contenant la tension réelle mesurée par l'ADC
 
 // Valeurs composants circuit 
-
 float R1 = 100000.0;
 float R2 = 1000.0;
 float R3 = 100000.0;
@@ -16,16 +12,17 @@ float R5 = 10000.0;
 float Vcc = 5.0;
 
 // ========= Initialisation Bluetooth ========= //
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 #include <SoftwareSerial.h>
 #define rxPin 10  // Broche 10 en tant que RX, à raccorder sur TX du HC-05
 #define txPin 11  // Broche 11 en tant que TX, à raccorder sur RX du HC-05
-#define baudrate 38400
-#define baudrate2 9600
-SoftwareSerial bluetooth(rxPin,txPin); // Définition du software serial
+SoftwareSerial bluetooth(rxPin,txPin); // Définition du software serial pour le bluetooth
 
-volatile int envoi =0; // variable pour gérer l'autorisation d'envoi de données à l'appli
-volatile int menu_envoi =0;  // variable pour gérer le menu d'autorisation d'envoi de données à l'appli
-volatile int reception_message_appli =0; // si reception message de l'appli alors variable à 1
+//volatile int envoi=0; // variable pour gérer l'autorisation d'envoi de données à l'appli
+//volatile int menu_envoi=0;  // variable pour gérer le menu d'autorisation d'envoi de données à l'appli
+volatile int reception_message_appli =0; // variable signalant la reception d'un message de l'appli
 
 // ========= Initialisation OLED ========= //
 
@@ -42,8 +39,7 @@ volatile Adafruit_SSD1306 ecranOLED(nombreDePixelsEnLargeur, nombreDePixelsEnHau
 #define largeurDeLimage           128          // Largeur de l'image à afficher, en pixels
 #define hauteurDeLimage           64          // Hauteur de l'image à afficher, en pixels
 
-// 'R (1)', 128x64px
-const unsigned char imageAafficher [] PROGMEM = {
+const unsigned char imageAafficher [] PROGMEM = { // tableau codé de l'image à afficher
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0f, 0xfe, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
@@ -112,12 +108,12 @@ const unsigned char imageAafficher [] PROGMEM = {
 
 // ========= Initialisation Encodeur Rotatoire ========= //
 
-//Parameters
+//Initialisation des pins
 volatile const int clkPin  = 3;
 volatile const int dtPin  = 4;
 volatile const int swPin  = 2;
 
-//Variables
+//Initialisation des variables
 volatile int rotVal  = 1;
 volatile bool clkState  = LOW;
 volatile bool clkLast  = HIGH;
@@ -132,16 +128,17 @@ volatile int Menu=0;
 // *********************************************************//
 
 void setup() {
+  // ========= Setup Port Série ========= //
   Serial.begin(38400);
-  //Serial.begin(baudrate);
   Serial.println(F("Initialize System"));
   
   // ========= Setup Bluetooth ========= //
   pinMode(rxPin, INPUT);
   pinMode(txPin, OUTPUT);
 
-  bluetooth.begin(baudrate2);
-  //Serial.println(F("Setup BT ok"));
+  bluetooth.begin(9600);
+  Serial.println(F("Setup BT ok"));
+  
   // ========= Setup Encodeur Rotatoire ========= //
   pinMode(clkPin,INPUT);
   pinMode(dtPin,INPUT);
@@ -150,187 +147,112 @@ void setup() {
   pinMode(clkPin, INPUT_PULLUP);  // rajouté
   attachInterrupt(1,readRotary,CHANGE);  // rajouté
   attachInterrupt(0,readRotary,CHANGE);  // rajouté
-  //Serial.println(F("Setup Encodeur ok"));
+  Serial.println(F("Setup Encodeur ok"));
+  
   // ========= Setup OLED ========= //
-  //ecranOLED.clearDisplay(); 
-  // Initialisation de l'écran OLED
-  //Serial.println(F("Setup oled ouais"));
-  if(!ecranOLED.begin(SSD1306_SWITCHCAPVCC, adresseI2CecranOLED)){
-    //Serial.println(F("Setup oled AIE")); 
-    while(1);  }    // Arrêt du programme (boucle infinie) en cas d'échec de l'initialisation
-  //Serial.println(F("Setup oled aller"));
+  ecranOLED.clearDisplay(); 
+  if(!ecranOLED.begin(SSD1306_SWITCHCAPVCC, adresseI2CecranOLED)){ while(1);  }    // Arrêt du programme (boucle infinie) en cas d'échec de l'initialisation
   ecranOLED.clearDisplay();   // Effaçage de la mémoire tampon de l'écran OLED
   delay(200);                            
-  //Serial.println(F("Setup oled ok"));
-  // ========= ANIMATION OLED BEGINNING ========= //
+  Serial.println(F("Setup oled ok"));
+  
+  // ========= Animation Oled Début de programme ========= //
   drawcircle();    // Draw circles (outlines)
   fillcircle();    // Draw circles (filled)
-  //Serial.println(F("Animation initialisation ok"));
+  Serial.println(F("Animation initialisation ok"));
+  
   // ========= FIN Setup ========= //
-  //Serial.println("Fin Setup");
+  Serial.println("Fin Setup");
 }
 
 // *********************************************************//
 // *********************************************************//
 
 void loop() {
-  //Serial.print("Menu =");
-  //Serial.print(Menu);
-  //Serial.print("    Switch = ");
-  //Serial.println(Switch);
-
-  // ========= Lecture Sensor ========= //
+  // ========= Mesure Capteur ========= //
   Voltage_ADC_map = analogRead(sensorPin) ;
-  //Serial.print("Voltage_ADC_map : ");
-  //Serial.print(Voltage_ADC_map);
+  //Serial.print("Voltage_ADC_map : "); Serial.print(Voltage_ADC_map);
   Voltage_ADC = (float) 5/1023*Voltage_ADC_map ; // transfert de la donnée brute en tension réelle
-  //Serial.print("  Voltage_ADC : ");
-  //Serial.print(Voltage_ADC);
+  //Serial.print("  Voltage_ADC : "); Serial.print(Voltage_ADC);
   float R_sensor = (1+R3/R2)*R1*Vcc/Voltage_ADC - R1 - R5 ; // calcul de la résistance correspondante
-  //Serial.print("  Rsensor : ");
-  //Serial.println(R_sensor);
-  // ========= Envoi donnée Résistance Appli ========= //
-//  // ecouter le bluetooth
-//  // si reception message
-//  // reception_message_appli =1 ;
+  //Serial.print("  Rsensor : "); Serial.println(R_sensor);
+  
+  // ========= Envoi donnée Appli ========= //
   int i=0;
-  char message[32]={0};       // A CHANGER
-
-  //while (bluetooth.available()){
+  char message[32]={0};    
+  do{
+    message[i++]=bluetooth.read();
+    delay(3);       
+    }while (bluetooth.available() >0) ;
     
-    // Acquisition message
-    
-    do{
-      message[i++]=bluetooth.read();
-      delay(3);       
-      }while (bluetooth.available() >0) ;
-      
-      //Serial.print("Message = ");
-      //Serial.println(message);
-    
-    if (strstr(message,"START_ACQUISITION")){ reception_message_appli=1; Serial.print("RéceptionMessage Start_acquisition");}   // A CHANNGEEEER
-    if (strstr(message,"STOP_ACQUISITION")){ reception_message_appli=0; }
-//}
+  if (strstr(message,"START_ACQUISITION")){ reception_message_appli=1; Serial.print("RéceptionMessage Start_acquisition");}   // A CHANNGEEEER
+  if (strstr(message,"STOP_ACQUISITION")){ reception_message_appli=0; }
 
   if (reception_message_appli==1){
     bluetooth.print("0");
     bluetooth.println((long int)R_sensor);
-    //Serial.println((long int))R_sensor);
   }
-  /*Serial.print("Voltage_ADC_map : ");
-  Serial.print(Voltage_ADC_map);
-  Serial.print("  Voltage_ADC : ");
-  Serial.print(Voltage_ADC);*/
-  Serial.print("  Rsensor : ");
-  Serial.println((long int)R_sensor);
-  
-//  if (reception_message_appli==1){  // si demande de l'appli d'envoi de données
-//    
-//    if ((menu_envoi==1) && (Switch==0)){  // menu autorisation d'envoi
-//      ecranOLED.clearDisplay();
-//      ecranOLED.setTextSize(2); 
-//      ecranOLED.setCursor(0,1); 
-//      ecranOLED.setTextColor(SSD1306_WHITE);  
-//      if ((rotVal==1)||(rotVal==3)){
-//        ecranOLED.println("Envoyer les données ?");
-//        ecranOLED.setTextColor(SSD1306_BLACK,SSD1306_WHITE);
-//        ecranOLED.println("Oui");
-//        ecranOLED.setTextColor(SSD1306_WHITE);
-//        ecranOLED.println("Non");
-//        }
-//      if ((rotVal==2)||(rotVal==4)){
-//        //ecranOLED.setTextColor(SSD1306_WHITE);
-//        ecranOLED.println("Envoyer les données ?");
-//        ecranOLED.println("Oui");
-//        ecranOLED.setTextColor(SSD1306_BLACK,SSD1306_WHITE);
-//        ecranOLED.println("Non");          
-//      }
-//      ecranOLED.display();    
-//    }
-//    else{
-//      Switch=0;
-//      menu_envoi=0;
-//      reception_message_appli=0;
-//      if (envoi==1){  // si autorisation d'envoyer les données
-//        // commande écriture canal bluetooth de la valeur de la résistance
-//      }
-//      // else{ // Rien ? }   
-//    }
-//  }
 
-  
-  
   // ========= Affichage OLED selon Encodeur Rotatoire ========= //
-  //Serial.print("AMenu =");
-  //Serial.print(Menu);
-  //Serial.print("    Switch = ");
-  //Serial.println(Switch);
-  if ((Menu==1) && (Switch==0)){  // menu
-     //Serial.println("Here20");
-    // AFFICHAGE OLED MENU 
-    // CURSEUR SUR LA 1ERE LIGNE
-
+  
+  if ((Menu==1) && (Switch==0)){  // Affichage du menu de choix
     ecranOLED.clearDisplay();
     ecranOLED.setTextSize(2); 
     ecranOLED.setCursor(0,1); 
-    //ecranOLED.setTextColor(SSD1306_BLACK,SSD1306_WHITE);
     ecranOLED.setTextColor(SSD1306_WHITE);
     
-      //Serial.println("Here1")
-    if (rotVal==1){;
+    if (rotVal==1){ // Sélection de la 1ère ligne
       ecranOLED.setTextColor(SSD1306_BLACK,SSD1306_WHITE);
       ecranOLED.println("Resistance");
       ecranOLED.setTextColor(SSD1306_WHITE);
-      ecranOLED.println("Zidane");
-      ecranOLED.println("INSA");
+      ecranOLED.println("Tension");
+      ecranOLED.println("Image");
       ecranOLED.println("Credits"); 
     }
-    if (rotVal==2){
-      //Serial.println("Here2");
+    
+    if (rotVal==2){ // Sélection de la 2e ligne
       ecranOLED.setTextColor(SSD1306_WHITE);
       ecranOLED.println("Resistance");
       ecranOLED.setTextColor(SSD1306_BLACK,SSD1306_WHITE);
-      ecranOLED.println("Zidane");
+      ecranOLED.println("Tension");
       ecranOLED.setTextColor(SSD1306_WHITE);
-      ecranOLED.println("INSA");
+      ecranOLED.println("Image");
       ecranOLED.println("Credits");  
     }
-    if (rotVal==3){    
-      //Serial.println("Here3"); 
+    
+    if (rotVal==3){ // Sélection de la 3e ligne
       ecranOLED.setTextColor(SSD1306_WHITE);
       ecranOLED.println("Resistance");
-      ecranOLED.println("Zidane");
+      ecranOLED.println("Tension");
       ecranOLED.setTextColor(SSD1306_BLACK,SSD1306_WHITE);
-      ecranOLED.println("INSA");
+      ecranOLED.println("Image");
       ecranOLED.setTextColor(SSD1306_WHITE);
       ecranOLED.println("Credits"); 
     }
-    if (rotVal==4){
-      //Serial.println("Here4");
+    if (rotVal==4){ // Sélection de la 4e ligne
       ecranOLED.setTextColor(SSD1306_WHITE);
       ecranOLED.println("Resistance");
-      ecranOLED.println("Zidane");
-      ecranOLED.println("INSA");
+      ecranOLED.println("Tension");
+      ecranOLED.println("Image");
       ecranOLED.setTextColor(SSD1306_BLACK,SSD1306_WHITE);
       ecranOLED.println("Credits");   
     }
-
     ecranOLED.display();    
-    //Serial.println("Here30");
   }
   
-  else{ // si choix dans le menu effectué alors affichage en conséquence
+  else{ // Affichage de l'OLED selon choix effectué dans le menu
     
-    if (choix_affichage==1){  // AFFICHAGE VALEUR RESISTANCE
+    if (choix_affichage==1){  // Affichage de la valeur de la résistance
       
-      affichage_OLED(R_sensor);  // affichage de la valeur sur l'écran OLED
+      affichage_OLED_resistance(R_sensor);  // affichage de la valeur sur l'écran OLED
     }
     
-    if (choix_affichage==2){  // AFFICHAGE IMAGE ZIDANE
+    if (choix_affichage==2){  // Affichage de la valeur de la tension
+      affichage_OLED_tension(Voltage_ADC);  // affichage de la valeur sur l'écran OLED
+      }
+      
+    if (choix_affichage==3){  // Affichage d'une image
       ecranOLED.clearDisplay(); 
-      // Initialisation de l'écran OLED
-      if(!ecranOLED.begin(SSD1306_SWITCHCAPVCC, adresseI2CecranOLED))
-        while(1);                               // Arrêt du programme (boucle infinie) en cas d'échec de l'initialisation
         
       // Affichage d'une image au centre de l'écran
       ecranOLED.clearDisplay();                           // Effaçage de la mémoire tampon de l'écran OLED
@@ -343,18 +265,12 @@ void loop() {
         hauteurDeLimage,
         WHITE);                                           // "couleur" de l'image
     
-      ecranOLED.display();                                // Transfert de la mémoire tampon à l'écran OLED, pour affichage
-      //delay(500);
-      }
-      
-    if (choix_affichage==3){  // AFFICHAGE
-          
+      ecranOLED.display();                                // Transfert de la mémoire tampon à l'écran OLED, pour affichage  
       } 
       
-    if (choix_affichage==4){  // AFFICHAGE Crédits Scrolling txt
+    if (choix_affichage==4){  // Affichage des crédits sous forme de texte mouvant
       scrolltext();
       }
-    //Serial.println("Here14E");
 
     Switch=0;
     Menu=0;
@@ -369,32 +285,23 @@ void loop() {
 
 // ========= Fonction Lecture Encodeur Rotatoire ========= //
 
-void readRotary( ) { /* function readRotary */
-    //noInterrupts();
-    //Serial.println("Here10");
-    
+void readRotary( ) { 
     //gestion rotation
     clkState = digitalRead(clkPin);
-    if ((clkLast == LOW) && (clkState == HIGH)) {//rotary moving
-      //Serial.println("Rotary position ");
+    if ((clkLast == LOW) && (clkState == HIGH)) {//mouvement de rotation
       if (digitalRead(dtPin) == HIGH) {
         rotVal = rotVal - 1;
-        // MONTER DUNE LIGNE LE CURSEUR DU MENU
         if ( rotVal < 1 ) {
           rotVal = 1;
-          // PAS BOUGER
-        }
+          }
       }
       else {
         rotVal++;
-        // DESENDRE DUNE LIGNE LE CURSEUR DU MENU
         if ( rotVal > 4 ) { rotVal = 4; }
       }
-      //Serial.print("RotVal = ");
-      //Serial.println(rotVal);
+      
       delay(100);
-      if(reception_message_appli==1){ menu_envoi=1; } // activation du menu choix affichage oled
-      else { Menu=1; /*Serial.println("Menu=1");*/} // activation du menu autorisation transmission données
+      Menu=1; // activation du menu autorisation transmission données
     
     }
     clkLast = clkState;
@@ -402,33 +309,53 @@ void readRotary( ) { /* function readRotary */
     //gestion bouton
     swState = digitalRead(swPin);
     if (swState == LOW && swLast == HIGH) {
-      //Serial.println("Rotary pressed");
-      if (Menu==1){choix_affichage=rotVal;}
-      Switch=1;
-      //Menu=1;
-      if(menu_envoi==1){ // CHOIX POUR MENU ENVOI 
-      if((rotVal==1)&&(rotVal==3)){envoi=1;}                              
-      else if((rotVal==2)&&(rotVal==4)){envoi=0;} 
-       }
-      delay(100);//debounce
+      if (Menu==1){choix_affichage=rotVal; Switch=1;}
+      delay(100);
     }
     swLast = swState;  
 }
 
 // ========= Fonction Affichage valeur Résistance OLED ========= //
 
-void affichage_OLED(float R_sensor){
+void affichage_OLED_resistance(float R_sensor){
   ecranOLED.clearDisplay();
   ecranOLED.setTextSize(3);
-  ecranOLED.setCursor(0,0); 
-  ecranOLED.setTextColor(SSD1306_WHITE); //ecranOLED.setTextColor(SSD1306_BLACK,SSD1306_WHITE);
-  ecranOLED.print("R=");
-  R_sensor = R_sensor/1000000 ;
-  ecranOLED.print(R_sensor);
-  ecranOLED.print(" Momhs");
+  ecranOLED.setCursor(15,0); 
+  ecranOLED.setTextColor(SSD1306_WHITE); 
+  ecranOLED.print("R");
+  ecranOLED.setTextSize(2);
+  ecranOLED.print("capteur");
+  ecranOLED.setTextSize(3);
+  ecranOLED.println("");
+  R_sensor = R_sensor/1000000 ; 
+  ecranOLED.print(" ");
+  ecranOLED.println(R_sensor);
+  ecranOLED.print("  M");
+  ecranOLED.setTextSize(2);
+  ecranOLED.print("ohm");
 
   ecranOLED.display();
 }
+
+
+// ========= Fonction Affichage valeur Tension OLED ========= //
+
+void affichage_OLED_tension(float V_adc){
+  ecranOLED.clearDisplay();
+  ecranOLED.setTextSize(3);
+  ecranOLED.setCursor(35,0); 
+  ecranOLED.setTextColor(SSD1306_WHITE); 
+  ecranOLED.print("V");
+  ecranOLED.setTextSize(2);
+  ecranOLED.print("adc");
+  ecranOLED.setTextSize(3);
+  ecranOLED.println("");
+  ecranOLED.print(" ");
+  ecranOLED.print(V_adc);
+  ecranOLED.println(" V");
+  ecranOLED.display();
+}
+
 
 // ========= Fonction Affichage Scroll Text ========= //
 
@@ -480,9 +407,9 @@ void fillcircle(void) {
   ecranOLED.clearDisplay();
 
   for(int16_t i=max(ecranOLED.width(),ecranOLED.height())/2; i>0; i-=3) {
-    // The INVERSE color is used so circles alternate white/black
+    // La couleur INVERSE est utilisée pour alterner les cercles blanc et noir
     ecranOLED.fillCircle(ecranOLED.width() / 2, ecranOLED.height() / 2, i, SSD1306_INVERSE);
-    ecranOLED.display(); // Update screen with each newly-drawn circle
+    ecranOLED.display();
     delay(100);
   }
 
