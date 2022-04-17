@@ -11,6 +11,10 @@
 
 > Notre capteur de contrainte utilise une jauge en papier munie d'un circuit résistif en graphite. L'intérêt de l'utilisation d'une telle jauge vient de sa facilité de mise en oeuvre. La jauge est directement tracée au crayon à papier et les matériaux nécessaires (papier et crayon) sont aisément procurables à moindre coût. 
 
+> Ce capteur low-tech exploite la théorie de la percolation au sein d’un système granulaire constitué de nanoparticules de graphite formant des feuillets. La fine couche de graphite déposée sur la feuille de papier présente un réseau percolé caractéristique. Dans ce réseau, le transport des électrons entre les nanoparticules est assuré par le mécanisme de l’effet tunnel. Ainsi, les différents chemins de percolation permettent la conduction du courant. 
+Lors de l’application de déformations en tension, le réseau percolé se trouve directement étendu (le taux de percolation des réseaux diminue). Cette déformation induit une augmentation de la distance effective entre les particules de graphite au sein du réseau. Une partie des chemins de percolation sont par conséquent rompus. Ainsi, la conduction du matériau diminue, soit la résistance de la couche de graphite augmente. 
+A l’inverse, lors de l’application de déformations en compression, le réseau percolé se trouve directement comprimé. Cette déformation induit une diminution de la distance effective entre les particules. Ainsi, de nouveaux chemins de percolation sont créés, la conduction du matériau augmente, soit la résistance de la couche de graphite diminue.
+
 > Dans son principe, une jauge de contrainte est un circuit résistif dont la résistance varie avec sa déformation. En mesurant les variations de résistance de la jauge, il est possible de déduire la contrainte et la déformation appliquées. Dans ce projet, notre jauge de contrainte est alimentée par une tension régulée de 5V d'une carte Arduino UNO. La mesure du courant circulant dans la jauge constitue le signal du capteur, qui doit être amplifié et filtré.
 
   ## 2.1. Circuit amplificateur
@@ -68,7 +72,8 @@ S
 
 # 3. Programme Arduino
 
-> Le programme Arduino permet de calculer la valeur de la résistance du capteur à partir de la valeur de tension mesurée par l'ADC de la carte. Cette mesure résistive est ensuite envoyée à l'application mobile via Bluetooth si un message de demande a été envoyé par l'application. L'encodeur rotatif permet d'activer un menu sur l'OLED de choix d'affichage sur celui-ci : soit on affiche la valeur de la résistance, soit on affiche la valeur de la tension. On peu également choisir d'afficher une image ou les crédits (défilants).
+> Le programme Arduino permet de calculer la valeur de la résistance du capteur à partir de la valeur de tension mesurée par l'ADC de la carte. Cette mesure résistive est ensuite envoyée à l'application mobile via Bluetooth si cela est requis sur l'application. L'encodeur rotatif permet d'activer un menu sur l'OLED de choix d'affichage sur celui-ci : soit on affiche la valeur de la résistance, soit on affiche la valeur de la tension. On peut également choisir d'afficher une image ou les crédits (défilants).
+> 
 > A la mise en route du programme, une animation d'initialisation apparaît sur l'écran. Après cela, on a directement accès à la valeur résistive mesurée par le capteur. En tournant l'encodeur rotatoire, on peut rentrer dans le menu et sélectionner l'affichage de son choix toujours grâce à la rotation de l'encodeur. Ensuite, on valide le choix en faisant une pression sur l'encodeur.
 
 # 4. Application mobile
@@ -86,5 +91,55 @@ S
 
  > N.B: le fichier .apk de l'application mobile est situé dans le répertoire suivant: SensorApp/app/release/. Dans ce dossier se trouve aussi  le fichier .aab (Android App Bundle), correspondant au nouveau format de publication d'applications Android ayant l'avantage d'être plus compact que le format apk (plus d'informations [ici](https://developer.android.com/guide/app-bundle)).
 
-# 5. Banc de test, datasheet et discussions
-  > 
+# 5. Mesures : Banc de test, datasheet et discussions
+
+  ## 5.1. Banc de test
+ > Pour caractériser notre capteur, nous avons utilisé notre propre banc de test réalisé par nos soins car nous n’étions pas satisfaits par ceux existants. 
+
+ > <div class="column" align="center">
+ > <img src="images/banc_test_1.jpg" alt="300" width="300"/>
+ > <img src="images/banc_test_2.jpg" alt="300" width="300"/>
+ > </div>
+ 
+ **Figure 7 - Banc de tests mis en place.**
+ 
+ > Ce banc de test est assez simpliste. On applique une courbure au capteur (en appuyant ou tirant sur l’extrémité de celui-ci) et on fait coulisser une pièce repère à la hauteur de cette extrémité, ce qui permet de lire la mesure de la flèche correspondante sur une règle. On peut ensuite remonter à l’angle de courbure du capteur. On réalise ainsi des mesures de résistance en fonction de l’angle de courbure aussi bien en tension qu’en compression.
+
+  ## 5.2. Mesures et résultats
+  
+> Grâce à ce banc, les caractéristiques du capteur ont été déterminées par la mesure de la résistance pour différentes courbures appliquées soit différentes déformations appliquées. L’expérience a été réalisée pour plusieurs types de crayons (2H, HB et B) dont la concentration en graphite varie.
+> 
+> On obtient ainsi deux graphes : le premier donne la variation relative en fonction de la courbure en tension selon le type de graphite et le second de même pour la courbure en compression.
+
+> <div class="row" align="center">
+ > <img src="images/Graphe1_caracteristique_tension.png"/>
+ > <img src="images/Graphe2_caracteristique_compression.png"/>
+ > </div>
+
+**Figure 8 - Caractéristique du capteur en tension (en haut) et en conpression (en bas) représentant la variation de résistance en fonction de l’angle de courbure appliqué au capteur.**
+
+> En tension, lors de l’augmentation de la courbure nous observons une augmentation quasi-linéaire de la résistance (et inversement). En compression, lors de l’augmentation de la courbure nous observons une diminution quasi-linéaire de la résistance (et inversement). 
+> 
+> En théorie, les variations de résistance sont plus importantes lorsque la dureté du crayon est plus élevée (HB > B > 2B). Sur le premier graphique, en tension, c’est bien le cas pour HB par rapport aux B et 2B cependant le 2B devrait se trouver sous le B. De la même manière, pour le deuxième graphique, en compression, le HB est bien sous le B cependant le 2B encore une fois devrait se trouver au-dessus des deux précédents, ce qui n’est pas le cas. 
+Cette anomalie peut s’expliquer par plusieurs facteurs : d’abord la non-répétabilité des mesures pour ce capteur mais aussi entre autres la quantité de graphite déposée sur le papier, la pression exercée sur le papier avec le crayon et le tracé effectué par le crayon. 
+
+## 5.3. Datasheet
+
+> <p align="center">
+> <img src="images/datasheet.png"/>
+> </p>
+
+**Figure 9 - Aperçu de la datasheet.**
+
+> La datasheet regroupe l'ensemble des spécificités et caractéristiques électriques du capteur ainsi que les résultats des mesures réalisées avec le banc de test.
+
+## 5.4. Discussions
+
+>Ces différents résultats communiquent les avantages et les limites de ce type de jauges de contrainte.
+>
+> La première limite importante est la non-répétabilité de la mesure, liée entre autres à la détérioration du capteur lors des manipulations de celui-ci.
+> 
+> La seconde grande limite est le dépôt de graphite sur le papier. En effet ce dépôt va conditionner la mesure. Ainsi, la pression exercée par le crayon sur le papier, le nombre de passages de crayons ou encore le tracé de celui-ci vont impacter la caractérisation de la jauge.
+Un procédé permettant un dépôt uniforme, précis et répétable permettrait de palier à cette limite.
+
+> Nous pouvons tout de même conclure que la confection de jauges de contrainte en graphite est réalisable et possiblement viable à condition que le processus de conception du capteur soit optimisé pour garantir la qualité de la mesure.
