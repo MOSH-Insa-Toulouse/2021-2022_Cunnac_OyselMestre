@@ -105,9 +105,9 @@ class Bluetooth(context: Context?, handler: Handler?){
         }
 
         // Start the thread to manage the connection and perform transmissions
-        Log.i(TAG, "Risque de plantage 1")
+
         mConnectedThread = ConnectedThread(socket!!)
-        Log.i(TAG, "Risque de plantage 2")
+
         mConnectedThread!!.start()
 
         // Send the name of the connected device back to the UI Activity
@@ -213,9 +213,6 @@ class Bluetooth(context: Context?, handler: Handler?){
                     mHandler!!.obtainMessage(MESSAGE_TOAST, msgtosend)
                     var incoming_msg = mHandler!!.obtainMessage(MESSAGE_READ, bytes, -1, msgtosend)
                     incoming_msg.sendToTarget()
-
-                    //mHandler!!.obtainMessage(MESSAGE_TOAST, msgtosend).sendToTarget()
-                    //mHandler!!.obtainMessage(MESSAGE_TOAST, bytes, -1, String(buffer)).sendToTarget()
 
                 } catch (e: IOException) {
                     Log.e(TAG, "disconnected", e)

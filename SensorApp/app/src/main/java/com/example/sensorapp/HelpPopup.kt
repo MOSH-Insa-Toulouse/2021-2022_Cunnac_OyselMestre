@@ -12,7 +12,7 @@ class HelpPopup(private val adapter: MainActivity) : Dialog(adapter) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.popup_help)
-        //Cette pop-up sert seulement à afficher un texte d'aide. Le code est d'une trivialié déconcertante
+
         findViewById<Button>(R.id.dismiss_button).setOnClickListener {
             dismiss()
         }

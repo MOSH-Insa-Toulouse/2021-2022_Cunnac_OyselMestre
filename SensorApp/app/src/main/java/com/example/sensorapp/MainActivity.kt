@@ -90,12 +90,10 @@ class MainActivity : AppCompatActivity() {
         lineChart.title("Sensor Resistance (MΩ)")
         lineChartView.setChart(lineChart) //set pie on view
 
-
         btStatus(Bluetooth(this, handler).getState().toString())
 
-
         btButton.setOnClickListener{
-            if ( Bluetooth(this, handler).getState()  == 0 ) connectService("HC-05") //connectService("MOODOOW2")
+            if ( Bluetooth(this, handler).getState()  == 0 ) connectService("HC-05")
             else Bluetooth(this, handler).stop()
         }
 
@@ -174,35 +172,6 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "APPEND DATA: $message")
                 data.add(ValueDataEntry( inc, subseq.toFloat()/10.0.pow(6) ))
                 data_array.add(subseq)
-            }
-        }
-    }
-
-    fun data_send() {
-
-        Log.i(TAG, "data send FUNCTION")
-
-        if (data_array.isEmpty()) Toast.makeText(this, "No data to export !", Toast.LENGTH_SHORT).show()
-        else {
-        val sendIntent = Intent(Intent.ACTION_VIEW)
-
-            var stringToSend = ""
-
-            for (data_element in data_array){ //Make text to send
-                stringToSend += "$data_element\n"
-            }
-            Log.i(TAG, "Data to send: $stringToSend")
-
-            sendIntent.putExtra(Intent.EXTRA_TEXT, stringToSend) //text to write
-
-            try {
-                startActivity(Intent.createChooser(sendIntent, "Send data..."))
-                Log.i(TAG, "BONJOUR")
-            } catch (ex: ActivityNotFoundException) {
-                Toast.makeText(
-                    this,
-                    "Error, oups...", Toast.LENGTH_SHORT
-                ).show()
             }
         }
     }

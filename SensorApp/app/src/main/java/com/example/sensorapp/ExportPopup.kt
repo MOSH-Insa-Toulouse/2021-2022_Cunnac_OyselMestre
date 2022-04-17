@@ -19,7 +19,7 @@ class ExportPopup(private val adapter: MainActivity, val data: MutableList<DataE
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.popup_export)
-        //Cette pop-up sert seulement à afficher un texte d'aide. Le code est d'une trivialié déconcertante
+
         findViewById<Button>(R.id.other_button).setOnClickListener {
             other_data_send()
         }
