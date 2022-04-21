@@ -245,7 +245,7 @@ class Bluetooth(context: Context?, handler: Handler?){
             writtenMsg?.sendToTarget()
         }
 
-        // Call this method from the main activity to shut down the connection.
+        // Call this method to shut down the connection.
         fun cancel() {
             try {
                 mmSocket.close()

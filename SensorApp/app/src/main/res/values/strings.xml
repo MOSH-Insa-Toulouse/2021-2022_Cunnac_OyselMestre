@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MOSH Graphite Sensor</string>
+    <string name="send_email">Send Email</string>
+    <string name="connect">Connect</string>
 </resources>
