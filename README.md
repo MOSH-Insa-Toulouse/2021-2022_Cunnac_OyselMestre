@@ -2,10 +2,10 @@
 
 # 1. Contexte et objectifs du projet
 
-- Réaliser une jauge de contrainte low-tech à base de graphite: [Pencil Drawn Strain Gauges and Chemiresistors on Paper](https://www.researchgate.net/publication/259846610_Pencil_Drawn_Strain_Gauges_and_Chemiresistors_on_Paper)
-- Concevoir un shield Arduino contenant l'amplificateur du capteur et les composants électroniques annexes (émetteur/récepteur Bluetooth, encodeur rotatif et écran OLED)
-- Réaliser une application mobile connectée à l'émetteur Bluetooth du capteur sous Android Studio
-- Évaluer le capteur sur un banc de test pour rédiger une datasheet
+- [x] Réaliser une jauge de contrainte low-tech à base de graphite: [Pencil Drawn Strain Gauges and Chemiresistors on Paper](https://www.researchgate.net/publication/259846610_Pencil_Drawn_Strain_Gauges_and_Chemiresistors_on_Paper)
+- [x] Concevoir un shield Arduino contenant l'amplificateur du capteur et les composants électroniques annexes (émetteur/récepteur Bluetooth, encodeur rotatif et écran OLED)
+- [x] Réaliser une application mobile connectée à l'émetteur Bluetooth du capteur sous Android Studio
+- [x] Évaluer le capteur sur un banc de test pour rédiger une datasheet
 
 # 2. Capteur de contrainte
 
