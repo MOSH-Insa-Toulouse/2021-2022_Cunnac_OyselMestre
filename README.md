@@ -24,18 +24,23 @@ A l’inverse, lors de l’application de déformations en compression, le rése
  
  >   Notre jauge de contrainte est composée d'une seule résistance en série. De ce fait, notre signal est sensible aux dérives en tension de l'amplificateur. Notre AOP doit donc avoir un offset de tension en entrée très faible de manière à ce qu'il ne puisse fausser le signal fourni à l'ADC. Cela restreint notre choix d'amplificateur opérationnel. Nos jauges de contrainte en graphite ont une conductivité aux alentours de 10 nS. La jauge étant alimentée par 5V, nous nous attendons à avoir un signal en courant de l'ordre de 50 nA. En shuntant ce courant par une résistance de 100 kΩ, le signal en tension fourni à l'AOP est de 5 mV. À titre de comparaison, l'amplificateur [LM741](https://www.ti.com/lit/ds/symlink/lm741.pdf) présente un offset en entrée typique de 1 mV, et pouvant atteindre 5 mV. Ce composant n'est donc pas adapté pour notre utilisation. Ainsi notre amplificateur doit spécifiquement présenter un offset en entrée faible. Pour cette raison, nous utilisons le [LTC1050](https://www.analog.com/media/en/technical-documentation/data-sheets/1050fb.pdf), pour sa tension de dérive de 5 µV, soit 1000 fois plus faible que notre signal nominal de 5 mV.
  
- >   À partir de cet AOP, nous élaborons l'architecture du circuit amplificateur. Ce dernier dispose de trois étages de filtrage:
+ >   À partir de cet AOP, nous élaborons l'architecture du circuit amplificateur (cf. [Figure 1a](analog_circuit_images/analog_circuit.JPG)). Ce dernier dispose de trois étages de filtrage:
  >   - à l'entrée, un filtre passe-bas (R1C1) de fréquence de coupure de 16 Hz permet de filtrer les bruits en courant sur le signal d'entrée
  >   - un autre filtre passe bas de 1.6 Hz (R3C4) couplé à l'AOP permet de filtrer la composante du bruit à 50 Hz provenant du réseau électrique
  >   - à la sortie de l'amplificateur, un dernier filtre (R5C2) de 1.6 kHz permet de traiter les bruits dus à l'échantillonage de l'ADC
 
  >   La capacité C3 sert à filtrer les irrégularités de la tension d'alimentation de l'amplificateur. La résistance R2 sert à calibrer l'amplificateur sur le domaine de tension souhaité, qui est celui de l'ADC du micro-contrôleur. Lors de la phase de prototypage du circuit, nous avons utilisé un potentiomètre digital à la place de cette résistance pour trouver sa valeur. Enfin, la résistance R4 protège l'AOP contre les décharges électrostatiques et constitue un filtre RC avec la capacité C1 pour les bruits en tension.
 
-![Figure 1: Circuit amplificateur transimpédance](analog_circuit_images/analog_circuit.JPG "Circuit amplificateur transimpédance")
+![Figure 1a: Circuit amplificateur transimpédance](analog_circuit_images/analog_circuit.JPG "Circuit amplificateur transimpédance")
 
-**Figure 1 - Circuit amplificateur transimpédance**
+**Figure 1a - Circuit amplificateur transimpédance. La résistance *Rsensor* représente la jauge de contrainte.**
  
-> Pour vérifier le fonctionnement du circuit sur LTSpice, nous simulons la déformation de la jauge par un pulse de tension en entrée (Figure 2). Ce pulse de tension génère une variation du courant en entrée de l'AOP. Virtuellement, cela représente la variation de conductance de la jauge due à sa déformation. Pour cette simulation, nous faisons varier la conductance de 5 nS à 20 nS, ce qui correspond à l'ordre de grandeur des jauges resistives utilisées. Ce faisant, nous balayons à peu près tout l'intervalle de signaux d'entrée possibles:
+![Figure 1b](analog_circuit_images/filter1.JPG "Simulation AC")
+
+**Figure 1b - Simulation AC du circuit amplificateur. Les fréquences de coupure à 1.6 Hz, 16 Hz et 1.6 kHz des trois filtres en cascade sont visibles. Cette simulation permet de vérifier le fonctionnement en fréquence de notre circuit.**
+
+
+> Pour vérifier le fonctionnement normal du circuit sur LTSpice, nous simulons la déformation de la jauge par un pulse de tension en entrée (Figure 2). Ce pulse de tension génère une variation du courant en entrée de l'AOP. Virtuellement, cela représente la variation de conductance de la jauge due à sa déformation. Pour cette simulation, nous faisons varier la conductance de 5 nS à 20 nS, ce qui correspond à l'ordre de grandeur des jauges resistives utilisées. Ce faisant, nous balayons à peu près tout l'intervalle de signaux d'entrée possibles:
 S
 ![Figure 2: Circuit amplificateur transimpédance pour simulation](analog_circuit_images/analog_circuit_full_sim.JPG "Circuit amplificateur transimpédance")
 
@@ -116,7 +121,7 @@ S
  > <img src="images/Graphe2_caracteristique_compression.png"/>
  > </div>
 
-**Figure 8 - Caractéristique du capteur en tension (en haut) et en conpression (en bas) représentant la variation de résistance en fonction de l’angle de courbure appliqué au capteur.**
+**Figure 8 - Caractéristique du capteur en tension (en haut) et en conpression (en bas) représentant la variation de résistance en fonction de l’angle de courbure appliqué au capteur. La pente des courbes représente la sensibilité du capteur, que l'on compare avec un autre capteur de déformation dans la section *Discussions*.**
 
 > En tension, lors de l’augmentation de la courbure nous observons une augmentation quasi-linéaire de la résistance (et inversement). En compression, lors de l’augmentation de la courbure nous observons une diminution quasi-linéaire de la résistance (et inversement). 
 > 
@@ -142,4 +147,13 @@ Cette anomalie peut s’expliquer par plusieurs facteurs : d’abord la non-rép
 > La seconde grande limite est le dépôt de graphite sur le papier. En effet ce dépôt va conditionner la mesure. Ainsi, la pression exercée par le crayon sur le papier, le nombre de passages de crayons ou encore le tracé de celui-ci vont impacter la caractérisation de la jauge.
 Un procédé permettant un dépôt uniforme, précis et répétable permettrait de palier à cette limite.
 
-> Nous pouvons tout de même conclure que la confection de jauges de contrainte en graphite est réalisable et possiblement viable à condition que le processus de conception du capteur soit optimisé pour garantir la qualité de la mesure.
+ > Il est aussi intéressant de comparer notre technologie avec celle d'autres capteurs. Pour ce faire, nous avons testé avec le même banc le [Flex Sensor Spectra Symbol](https://cdn.sparkfun.com/assets/9/5/b/f/7/FLEX_SENSOR_-_SPECIAL_EDITION_DATA_SHEET_v2019__Rev_A_.pdf). Il s'agit une petite jauge résistive, de taille comparable à nos capteurs s'adaptant aussi bien à notre banc de test. Pour réaliser les mesures de résistance, étant donné que le Flex Sensor a une résistance de l'ordre de dizaines de kΩ et notre circuit conditionneur sous Arduino ne peut mesurer des résistances inférieures à 10 MΩ, nous avons utilisé un multimètre HP® 34410A pour effectuer les mesures:
+
+> <div class="row" align="center">
+ > <img src="images/Flex_sensor_caracteristique_compression.png"/>
+ > <img src="images/Flex_sensor_caracteristique_tension.png"/>
+ > </div>
+
+**Figure 10 - Résultats des mesures du Flex Sensor sur le banc de test. La sensibilité correspond à la pente de la courbe qui est écrite sur les tracés. La différence d'ordre de grandeur entre la sensibilité du Flex Sensor et de nos capteurs ne nous permettent pas de représenter les mesures des deux technologies sur le même graphe.**
+
+> La sensibilité du Flex Sensor est environ 100 fois plus faible en compression et 30 fois plus faible en tension par rapport à nos jauges de graphite (cf. Figure 8). La sensibilité élevée des jauges de contrainte en graphite représente un avantage pour la mesure de déformations - une faible déformation induit une forte variation de résistance qui est plus aisée à mesurer. Il est donc important de remarquer que notre technologie, en plus d'avoir le très fort intérêt d'être bon marché, dispose également d'avantages concrets en terme d'instrumentation et de mesure. Nous pouvons alors conclure que la confection de jauges de contrainte en graphite présente des atouts certains par rapport à d'autres capteurs du même type. De ce fait, à condition que le processus de conception du capteur soit optimisé pour garantir la répétabilité et la qualité d'une mesure, nous pouvons penser que ce genre de jauge de contraintes *Low Tech* peut trouver sa place dans des projets d'ingénierie et d'instrumentation divers. 
